@@ -4,7 +4,7 @@
 <head>
 	
   <meta charset="utf-8">
-  <title>Public file sharing</title>
+  <title>PauLLa.FiSh : File Sharing</title>
   <meta name="author" content="Pylons Project">
   <link rel="shortcut icon" href="/static/favicon.ico">
   <link rel="stylesheet" href="/static/style.css">

@@ -72,6 +72,13 @@ def dl_page(request):
         )
     return response
 
+@view_config(route_name='detail', renderer='detail.mako')
+def detail_page(request):
+    task_id = int(request.matchdict['id'])
+    rs = request.db.execute("select id, fdescr, fpath, fid, fname from tasks where id = %i" % (task_id))
+    file_data = id, fdescr, fpath, fid, fname = rs.fetchone()
+    return {'file_data' : file_data}
+
 @view_config(context='pyramid.exceptions.NotFound', renderer='notfound.mako')
 def notfound_view(request):
     request.response.status = '404 Not Found'
