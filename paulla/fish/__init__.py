@@ -1,11 +1,7 @@
 import os
-import logging
 
 from pyramid.config import Configurator
 from pyramid.session import UnencryptedCookieSessionFactoryConfig
-
-logging.basicConfig()
-log = logging.getLogger(__file__)
 
 here = os.path.dirname(os.path.abspath(__file__))
 
@@ -16,7 +12,6 @@ def main (global_config, **setings):
     settings['debug_all'] = True
     settings['mako.directories'] = os.path.join(here, 'templates')
     settings['db'] = os.path.join(here, 'fish.db')
-    log.warn(settings['db'])
     # session factory
     session_factory = UnencryptedCookieSessionFactoryConfig('itsaseekreet')
     # configuration setup

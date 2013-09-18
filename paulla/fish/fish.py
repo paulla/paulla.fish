@@ -93,7 +93,6 @@ def close_db_connection(request):
 @subscriber(ApplicationCreated)
 def application_created_subscriber(event):
     log.warn('Initializing database...')
-    log.warn(os.path.join(here, 'schema.sql'))
     with open(os.path.join(here, 'schema.sql')) as f:
         stmt = f.read()
         settings = event.app.registry.settings
