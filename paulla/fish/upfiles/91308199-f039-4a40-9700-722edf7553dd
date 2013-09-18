@@ -1,7 +1,0 @@
-primary-image        cf3:/7450-TiMOS-7.0.R5
-primary-config       cf3:/config.cfg
-persist              off
-autonegotiate
-duplex               full
-speed                100
-wait                 3
