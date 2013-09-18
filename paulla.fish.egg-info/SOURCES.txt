@@ -1,4 +1,3 @@
-.installed.cfg
 CHANGES.txt
 MANIFEST.in
 README.rst
