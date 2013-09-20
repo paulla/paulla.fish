@@ -17,5 +17,3 @@ paulla.fish.egg-info/requires.txt
 paulla.fish.egg-info/top_level.txt
 paulla/fish/__init__.py
 paulla/fish/fish.py
-scripts/__init__.py
-scripts/initializedb.py
