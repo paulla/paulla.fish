@@ -32,3 +32,8 @@ a.header:hover, a.footer:hover {
 .inDescr {
     width: 40em;
 }
+
+span.alignRight {
+    text-align:right;
+    margin:0 0 0 100%;
+}

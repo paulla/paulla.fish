@@ -68,7 +68,7 @@ li.fileList:hover {
 }
 
 #hoverSoft:hover {
-    display:inline;
+    display:block;
     background-color: #eee ;
 }
 

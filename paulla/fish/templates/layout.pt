@@ -13,6 +13,7 @@
 		<![endif]-->
 		<link rel="stylesheet" href="${request.route_path('list')}static/css/knacss.css" media="all">
     	<link rel="stylesheet" href="${request.route_path('list')}static/css/pure-css-gui-icons.css" media="all">
+    	<link rel="stylesheet" href="${request.route_path('list')}static/css/tooltip.css" media="all">
     	<link rel="stylesheet" href="${request.route_path('list')}static/css/button.css" media="all">
 		<link rel="stylesheet" href="${request.route_path('list')}static/css/styles.css" media="all">
 </head>
