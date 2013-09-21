@@ -37,3 +37,7 @@ span.alignRight {
     text-align:right;
     margin:0 0 0 100%;
 }
+
+alignCenter {
+    text-align:center;
+}

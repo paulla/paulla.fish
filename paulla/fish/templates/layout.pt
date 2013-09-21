@@ -18,34 +18,33 @@
 		<link rel="stylesheet" href="${request.route_path('list')}static/css/styles.css" media="all">
 </head>
 <body>
-	
 	<a class="header" href="${request.route_path('list')}">
 	<header id="header" role="banner" class="line pam txtcenter">
 		<h1>PauLLa.FiSh : File Sharing<h1>
 	</header>
 	</a>
-	
+		<div class="alignCenter" id="flash" tal:condition="request.session.peek_flash()">
+    <span tal:omit-tag=""
+        tal:repeat="message request.session.pop_flash()">
+        ${message}<br>
+    </span>
+</div>	
 	<div id="main" role="main" class="row">
-		<div class="col w20 pam aside">
+		<div class="col w40 pam aside">
 			<nav id="navigation" role="navigation">
 				<ul class="pam">
-<a href="${request.route_path('new')}">Add a new file</a>
+<strong>Add a new file</strong>
+<div id="fileList" tal:define="new load: new.pt" metal:use-macro="new" />
 	    		</ul>
     		</nav>
 			</div>
 		<div class="col pam content">
 <ul class="pam test">
-<div id="flash" tal:condition="request.session.peek_flash()">
-    <span tal:omit-tag=""
-        tal:repeat="message request.session.pop_flash()">
-        ${message}<br>
-    </span>
-</div>
 <div id="fileList" tal:define="list load: list.pt" metal:use-macro="list" />
 </ul>
 		</div>
 		</div>
-	
+
 	<footer id="footer" role="contentinfo" class="line pam txtcenter">
 		<a class='footer' href="http://www.paulla.asso.fr/">Site de l'association "PauLLa"</a><br>
     	<a class='footer' href="https://github.com/paulla/paulla.fish">Code sur Github.com</a>

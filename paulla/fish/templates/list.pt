@@ -4,7 +4,7 @@
         <span class="search"><a href="detail/${file['id']}/${file['fname']}"><span class="tooltip">View detail</span></a></span>
         <span class="download"><a alt="Download" href="dl/${file['id']}/${file['fname']}"><span class="tooltip">Download</span></a></span>
         <span class="delete-alt"><a href="close/${file['id']}"><span class="tooltip">Close</span></a></span>
-        <em class="tooltip-container">${file['fname']}<span class="tooltip"><img src="dl/${file['id']}/${file['fname']}"/></span></em>
+        <em class="tooltip-container">${file['fname']}<span class="tooltip"><img src="dl/${file['id']}/${file['fname']}"/>${file['fdescr']}</span></em>
         </div>
     </li>
 </ul>

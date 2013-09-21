@@ -32,7 +32,7 @@ def list_view(request):
     return {'file_list':files}
 #"""
 
-@view_config(route_name='new', renderer='new.mako')
+@view_config(route_name='new', renderer='templates/new.pt')
 def new_view(request):
     if request.method == 'POST':
         if request.POST.get('fdescr','fname'):
