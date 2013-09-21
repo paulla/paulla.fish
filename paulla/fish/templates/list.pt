@@ -1,0 +1,10 @@
+<ul>
+    <li class="fileList" tal:repeat="file file_list">
+        <div id="hoverSoft">
+        <span class="search"><a href="detail/${file['id']}/${file['fname']}"></a></span>
+        ${file['fname']}&nbsp&nbsp
+        <span class="download txtright"><a href="dl/${file['id']}/${file['fname']}"></a></span>
+        <span class="delete-alt"><a href="close/${file['id']}"></a></span>
+        </div>
+    </li>
+</ul>

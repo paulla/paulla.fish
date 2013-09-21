@@ -10,17 +10,27 @@ from pyramid.events import ApplicationCreated
 from pyramid.httpexceptions import HTTPFound
 from pyramid.view import view_config
 from pyramid.response import Response,FileResponse
+from chameleon import PageTemplateLoader
+
 
 here = os.path.dirname(os.path.abspath(__file__))
 logging.basicConfig()
 log = logging.getLogger(__file__)
 
+templates = PageTemplateLoader(os.path.join(here, "templates"))
+
 # views
-@view_config(route_name='list', renderer='list.mako')
+"""
+@view_config(route_name='list', renderer='templates/list.pt')
+def hello_world(request):
+    return {'names':['world','test',['bidule1','bidule2']]}
+#"""
+@view_config(route_name='list', renderer='templates/layout.pt')
 def list_view(request):
     rs = request.db.execute("select id, fdescr, fpath, fid, fname from tasks where closed = 0")
-    tasks = [dict(id=row[0], fdescr=row[1], fpath=row[2], fid=row[3], fname=row[4]) for row in rs.fetchall()]
-    return {'tasks': tasks}
+    files = [dict(id=row[0], fdescr=row[1], fpath=row[2], fid=row[3], fname=row[4]) for row in rs.fetchall()]
+    return {'file_list':files}
+#"""
 
 @view_config(route_name='new', renderer='new.mako')
 def new_view(request):
