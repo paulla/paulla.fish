@@ -2,3 +2,6 @@ pyramid
 waitress
 SQLAlchemy
 paste
+pyramid_chameleon
+pyramid_tm
+pyramid_debugtoolbar

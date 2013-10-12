@@ -1,15 +1,25 @@
 /* Votre Style */
 #header,footer {
     box-shadow: 0.2em 0.2em 1em #bbb;
-    background-color: #DCDCDC;
+    background-color: #ccc !important;
 }
 
 a.header, a.footer {
     text-decoration: none;
+    style : none;
 }
 
-a.header:hover, a.footer:hover {
+a:hover, a:hover {
     text-shadow:0em 0em 0.41em #aaa;
+}
+
+a:link, a:visited, a:visited {
+    color:#0055C5;
+    text-decoration:none;
+}
+
+a:hover, a:focus, a:active {
+    color:#000873;
 }
 
 #img {
@@ -40,4 +50,21 @@ span.alignRight {
 
 alignCenter {
     text-align:center;
+}
+
+#addfile {
+    display: none;
+}
+
+.test02 {
+}
+
+.in {
+    display: inline;
+}
+.bl {
+    display: block;
+}
+.inbl {
+    display: inline-block;
 }

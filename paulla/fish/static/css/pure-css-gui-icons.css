@@ -28,9 +28,7 @@ implementation of background-clip
 html, body                             {padding:0; margin:0; font:1em/1.4 Cambria, Georgia, sans-serif; color:#333; background:#fff;}
 header, hgroup                         {display:block;}
 
-a:link, a:visited                      {color:#0055C5; text-decoration:none;}
-a:visited                              {color:#000873;}
-a:hover, a:focus, a:active             {color:#fff; background:#0055C5;}
+
 
 /*.container                             {width:540px; overflow:hidden; padding:0 0 10px; margin:0 auto 40px;}*/
 /*.header                                {border-bottom:1px solid #ddd;}*/

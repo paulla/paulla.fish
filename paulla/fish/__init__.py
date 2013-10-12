@@ -5,7 +5,8 @@ from pyramid.session import UnencryptedCookieSessionFactoryConfig
 
 here = os.path.dirname(os.path.abspath(__file__))
 
-def main (global_config, **setings):
+
+def main(global_config, **setings):
     # configuration settings
     settings = {}
     settings['reload_all'] = True
@@ -16,8 +17,9 @@ def main (global_config, **setings):
     session_factory = UnencryptedCookieSessionFactoryConfig('itsaseekreet')
     # configuration setup
     config = Configurator(settings=settings, session_factory=session_factory)
+    config.include('pyramid_chameleon')
     # routes setup
-    config.add_route('list', '/')
+    config.add_route('listing', '/')
     config.add_route('new', '/new')
     config.add_route('close', '/close/{id}')
     config.add_route('dl', '/dl/{id}/{fname}')
