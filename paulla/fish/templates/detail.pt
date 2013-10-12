@@ -1,0 +1,12 @@
+<tal:block metal:use-macro="layout">
+    <figure metal:fill-slot="detail">
+    <div><a class="btn inbl" href="${request.route_path('listing')}">Back</a>
+     <span class="inbl"><h5>${file_data[4]}</h5></span></div>
+     <a href="${request.route_path('dl', id=file_data[0], fname=file_data[4])}">
+      <img src="${request.route_path('dl', id=file_data[0], fname=file_data[4])}" alt="${file_data[4]}"></img>
+     </a>
+     <figcaption>
+      <span class="name">Description de l'image : <br>${file_data[1]}</span>
+     </figcaption>
+    </figure>
+</tal:block>
