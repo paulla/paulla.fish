@@ -62,7 +62,7 @@ def new_view(request):
                 [request.POST['fdescr'], fpath, fid, fname, 0])
             request.db.commit()
             request.session.flash('%s was successfully added!' % (fname))
-            return HTTPFound(location=request.route_path('list'))
+            return HTTPFound(location=request.route_path('listing'))
         else:
             request.session.flash(
                 'Please enter a short description for the file!'
@@ -161,4 +161,4 @@ def show_element(request):
     return (
         "javascript:document.getElementById('%s').style.display = 'block'"
         % element
-    )    
+    )
