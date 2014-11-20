@@ -10,11 +10,9 @@ CHANGES = open(os.path.join(here, 'CHANGES.txt')).read()
 requires = [
     'pyramid',
     'waitress',
-    'SQLAlchemy',
-    'paste',
     'pyramid_chameleon',
-    'pyramid_tm',
     'pyramid_debugtoolbar',
+    'couchdbkit',
 ]
 
 setup(
