@@ -3,24 +3,23 @@ import uuid
 import logging
 import sqlite3
 
-from pyramid.config import Configurator
+
 from pyramid.httpexceptions import HTTPFound
+from pyramid.threadlocal import get_current_registry
 from pyramid.view import view_config
-from pyramid.response import Response, FileResponse
-from chameleon import PageTemplateLoader
+
 from pyramid.renderers import get_renderer
-from pyramid.events import (
-    subscriber,
-    BeforeRender,
-    NewRequest,
-    ApplicationCreated,
-    )
 
-here = os.path.dirname(os.path.abspath(__file__))
-logging.basicConfig()
-log = logging.getLogger(__file__)
+import couchdbkit
 
-templates = PageTemplateLoader(os.path.join(here, "templates"))
+settings = get_current_registry().settings
+# server object
+server = couchdbkit.Server(settings['couchdb.url'])
+
+# create database
+db = server.get_or_create_db(settings['couchdb.db'])
+# define models
+#Paste.set_db(db)
 
 @view_config(route_name='listing', renderer='templates/listing.pt')
 def list_view(request):
