@@ -12,14 +12,15 @@ from pyramid.renderers import get_renderer
 
 import couchdbkit
 
+from models import ToStore
+
 settings = get_current_registry().settings
 # server object
 server = couchdbkit.Server(settings['couchdb.url'])
 
 # create database
 db = server.get_or_create_db(settings['couchdb.db'])
-# define models
-#Paste.set_db(db)
+ToStore.set_db(db)
 
 @view_config(route_name='listing', renderer='templates/listing.pt')
 def list_view(request):
