@@ -14,11 +14,13 @@ def main(global_config, **setings):
     settings['mako.directories'] = os.path.join(here, 'templates')
     settings['db'] = os.path.join(here, 'fish.db')
     # session factory
+
     session_factory = UnencryptedCookieSessionFactoryConfig('itsaseekreet')
     # configuration setup
     config = Configurator(settings=settings, session_factory=session_factory)
     config.include('pyramid_chameleon')
     # routes setup
+
     config.add_route('listing', '/')
     config.add_route('new', '/new')
     config.add_route('close', '/close/{id}')
