@@ -2,18 +2,19 @@ import os
 
 from pyramid.config import Configurator
 from pyramid.session import UnencryptedCookieSessionFactoryConfig
+from pyramid.threadlocal import get_current_registry
 
 here = os.path.dirname(os.path.abspath(__file__))
 
 
-def main(global_config, **setings):
+def main(global_config, **settings):
     # configuration settings
-    settings = {}
+
     settings['reload_all'] = True
     settings['debug_all'] = True
     settings['mako.directories'] = os.path.join(here, 'templates')
     settings['db'] = os.path.join(here, 'fish.db')
-    # session factory
+    get_current_registry().settings = settings
 
     session_factory = UnencryptedCookieSessionFactoryConfig('itsaseekreet')
     # configuration setup
