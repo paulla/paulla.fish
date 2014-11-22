@@ -15,6 +15,8 @@ import couchdbkit
 from models import ToStore
 
 settings = get_current_registry().settings
+print settings
+
 # server object
 server = couchdbkit.Server(settings['couchdb.url'])
 
@@ -24,49 +26,48 @@ ToStore.set_db(db)
 
 @view_config(route_name='listing', renderer='templates/listing.pt')
 def list_view(request):
-    rs = request.db.execute(
-        "select id, fdescr, fpath, fid, fname from tasks where closed = 0"
-        )
-    files = [
-        dict(id=row[0], fdescr=row[1], fpath=row[2], fid=row[3], fname=row[4])
-        for row in rs.fetchall()
-        ]
-    files.reverse()
+    # rs = request.db.execute(
+    #     "select id, fdescr, fpath, fid, fname from tasks where closed = 0"
+    #     )
+    # files = [
+    #     dict(id=row[0], fdescr=row[1], fpath=row[2], fid=row[3], fname=row[4])
+    #     for row in rs.fetchall()
+    #     ]
+    # files.reverse()
     return {"layout": site_layout(),
-            'file_list': files}
+            'file_list': []}
 
 
-@view_config(route_name='new', renderer='templates/new.pt')
+@view_config(route_name='new', renderer='json', request_method='POST')
 def new_view(request):
-    if request.method == 'POST':
-        if request.POST.get('fdescr', 'fname'):
-            fdescr = request.POST['fdescr']
-            fname = request.POST['fname'].filename
-            input_file = request.POST['fname'].file
-            fid = str(uuid.uuid4())
-            fpath = os.path.join('./paulla/fish/upfiles')
-            full_fpath = os.path.join(fpath, fid)
-            tmp_fpath = full_fpath + '~'
-            output_file = open(tmp_fpath, 'wb')
-            input_file.seek(0)
-            while True:
-                data = input_file.read(2 << 16)
-                if not data:
-                    break
-                output_file.write(data)
+    if request.POST.get('fdescr', 'fname'):
+        fdescr = request.POST['fdescr']
+        fname = request.POST['fname'].filename
+        input_file = request.POST['fname'].file
+        fid = str(uuid.uuid4())
+        fpath = os.path.join('./paulla/fish/upfiles')
+        full_fpath = os.path.join(fpath, fid)
+        tmp_fpath = full_fpath + '~'
+        output_file = open(tmp_fpath, 'wb')
+        input_file.seek(0)
+        while True:
+            data = input_file.read(2 << 16)
+            if not data:
+                break
+            output_file.write(data)
             output_file.close()
             os.rename(tmp_fpath, full_fpath)
             request.db.execute(
                 'insert into tasks (fdescr, fpath, fid, fname, closed) \
-                    values (?, ?, ?, ?, ?)',
+            values (?, ?, ?, ?, ?)',
                 [request.POST['fdescr'], fpath, fid, fname, 0])
             request.db.commit()
             request.session.flash('%s was successfully added!' % (fname))
             return HTTPFound(location=request.route_path('listing'))
-        else:
-            request.session.flash(
-                'Please enter a short description for the file!'
-                )
+    else:
+        request.session.flash(
+            'Please enter a short description for the file!'
+            )
     return {}
 
 
@@ -113,28 +114,28 @@ def notfound_view(request):
     return {'layout': site_layout()}
 
 
-# subscribers
-@subscriber(NewRequest)
-def new_request_subscriber(event):
-    request = event.request
-    settings = request.registry.settings
-    request.db = sqlite3.connect(settings['db'])
-    request.add_finished_callback(close_db_connection)
+# s# ubscribers
+# @subscriber(NewRequest)
+# def new_request_subscriber(event):
+#     request = event.request
+#     settings = request.registry.settings
+#     request.db = sqlite3.connect(settings['db'])
+#     request.add_finished_callback(close_db_connection)
 
 
-def close_db_connection(request):
-    request.db.close()
+# def close_db_connection(request):
+#     request.db.close()
 
 
-@subscriber(ApplicationCreated)
-def application_created_subscriber(event):
-    log.warn('Initializing database...')
-    with open(os.path.join(here, 'schema.sql')) as f:
-        stmt = f.read()
-        settings = event.app.registry.settings
-        db = sqlite3.connect(settings['db'])
-        db.executescript(stmt)
-        db.commit()
+# @subscriber(ApplicationCreated)
+# def application_created_subscriber(event):
+#     log.warn('Initializing database...')
+#     with open(os.path.join(here, 'schema.sql')) as f:
+#         stmt = f.read()
+#         settings = event.app.registry.settings
+#         db = sqlite3.connect(settings['db'])
+#         db.executescript(stmt)
+#         db.commit()
 
 """
 @subscriber(BeforeRender)
