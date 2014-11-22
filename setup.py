@@ -36,7 +36,7 @@ setup(
     zip_safe=False,
     install_requires=requires,
     tests_require=requires,
-    test_suite="paullafish",
+    test_suite="paulla.fish",
     entry_points="""\
     [paste.app_factory]
     main = paulla.fish:main
