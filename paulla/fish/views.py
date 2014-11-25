@@ -1,7 +1,6 @@
 import os
-import uuid
 import logging
-import sqlite3
+import datetime
 
 
 from pyramid.httpexceptions import HTTPFound
@@ -9,6 +8,8 @@ from pyramid.threadlocal import get_current_registry
 from pyramid.view import view_config
 
 from pyramid.renderers import get_renderer
+
+import magic
 
 import couchdbkit
 
@@ -26,44 +27,31 @@ ToStore.set_db(db)
 
 @view_config(route_name='listing', renderer='templates/listing.pt')
 def list_view(request):
-    # rs = request.db.execute(
-    #     "select id, fdescr, fpath, fid, fname from tasks where closed = 0"
-    #     )
-    # files = [
-    #     dict(id=row[0], fdescr=row[1], fpath=row[2], fid=row[3], fname=row[4])
-    #     for row in rs.fetchall()
-    #     ]
-    # files.reverse()
     return {"layout": site_layout(),
             'file_list': []}
 
 
 @view_config(route_name='new', renderer='json', request_method='POST')
 def new_view(request):
-    if request.POST.get('fdescr', 'fname'):
-        fdescr = request.POST['fdescr']
-        fname = request.POST['fname'].filename
-        input_file = request.POST['fname'].file
-        fid = str(uuid.uuid4())
-        fpath = os.path.join('./paulla/fish/upfiles')
-        full_fpath = os.path.join(fpath, fid)
-        tmp_fpath = full_fpath + '~'
-        output_file = open(tmp_fpath, 'wb')
-        input_file.seek(0)
-        while True:
-            data = input_file.read(2 << 16)
-            if not data:
-                break
-            output_file.write(data)
-            output_file.close()
-            os.rename(tmp_fpath, full_fpath)
-            request.db.execute(
-                'insert into tasks (fdescr, fpath, fid, fname, closed) \
-            values (?, ?, ?, ?, ?)',
-                [request.POST['fdescr'], fpath, fid, fname, 0])
-            request.db.commit()
-            request.session.flash('%s was successfully added!' % (fname))
-            return HTTPFound(location=request.route_path('listing'))
+    if request.POST.get('fdescr', 'fname'): # TODO
+        descripton = request.POST['description']
+        filename = request.POST['filename'].filename
+
+        inputFile = request.POST['filename'].file
+
+        toStore = ToStore(descripton=descripton,
+                          filename=filename,
+                          dtInserted=datetime.datetime.now())
+        toStore.save()
+        mime = ''
+        with magic.Magic(flags=magic.MAGIC_MIME_TYPE) as guess:
+            mime = guess.id_buffer(inputFile.read(1024))
+
+        inputFile.seek(0)
+
+        toStore.put_attachment(inputFile, 'attachment', content_type=mime)
+
+        return HTTPFound(location=request.route_path('listing'))
     else:
         request.session.flash(
             'Please enter a short description for the file!'

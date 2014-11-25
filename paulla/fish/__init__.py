@@ -14,6 +14,7 @@ def main(global_config, **settings):
     settings['debug_all'] = True
     settings['mako.directories'] = os.path.join(here, 'templates')
     settings['db'] = os.path.join(here, 'fish.db')
+
     get_current_registry().settings = settings
 
     session_factory = UnencryptedCookieSessionFactoryConfig('itsaseekreet')
