@@ -12,6 +12,7 @@ from pyramid.renderers import get_renderer
 import magic
 
 import couchdbkit
+from couchdbkit.designer import push
 
 from models import ToStore
 
@@ -24,6 +25,11 @@ server = couchdbkit.Server(settings['couchdb.url'])
 # create database
 db = server.get_or_create_db(settings['couchdb.db'])
 ToStore.set_db(db)
+
+here = os.path.dirname(__file__)
+for view in ['list']:
+    path = os.path.join(here, 'couchdb', '_design', view)
+    push(path, db)
 
 @view_config(route_name='listing', renderer='templates/listing.pt')
 def list_view(request):
