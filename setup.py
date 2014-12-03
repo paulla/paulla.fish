@@ -41,5 +41,7 @@ setup(
     entry_points="""\
     [paste.app_factory]
     main = paulla.fish:main
+    [console_scripts]
+    migration = paulla.fish.utils:migration
     """,
 )
