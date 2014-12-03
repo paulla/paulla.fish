@@ -3,11 +3,10 @@ import datetime
 
 
 from pyramid.httpexceptions import HTTPFound
+from pyramid.httpexceptions import HTTPNotFound
 from pyramid.threadlocal import get_current_registry
 from pyramid.view import view_config
 from pyramid.response import Response
-
-from pyramid.renderers import get_renderer
 
 import magic
 
@@ -71,7 +70,7 @@ def dl_page(request):
     try:
         stored = ToStore.get(request.matchdict['id'])
     except couchdbkit.exceptions.ResourceNotFound :
-        return "Nope" # todo 404
+        return HTTPNotFound()
 
     body = stored.fetch_attachment('attachment', stream=True)
     response = Response(content_type=stored._attachments['attachment']['content_type'],
@@ -88,7 +87,7 @@ def detail_page(request):
     try:
         stored = ToStore.get(request.matchdict['id'])
     except couchdbkit.exceptions.ResourceNotFound :
-        return "Nope" # todo 404
+        return HTTPNotFound()
 
     return {'stored': stored}
 
