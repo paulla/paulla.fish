@@ -35,8 +35,7 @@ for view in ['list']:
 def list_view(request):
     stored = ToStore.view('list/all',
                           descending=True,)
-    return {"layout": site_layout(),
-            'file_list': stored}
+    return {'file_list': stored}
 
 
 @view_config(route_name='new', renderer='json', request_method='POST')
@@ -91,18 +90,10 @@ def detail_page(request):
     except couchdbkit.exceptions.ResourceNotFound :
         return "Nope" # todo 404
 
-
-
-    return {'layout': site_layout(),
-            'stored': stored}
+    return {'stored': stored}
 
 
 @view_config(context='pyramid.exceptions.NotFound', renderer='templates/notfound.pt')
 def notfound_view(request):
     request.response.status = '404 Not Found'
-    return {'layout': site_layout()}
-
-def site_layout():
-    renderer = get_renderer("templates/layout.pt")
-    layout = renderer.implementation().macros['layout']
-    return layout
+    return {}

@@ -1,4 +1,4 @@
-<tal:block metal:use-macro="layout">
+<tal:block metal:use-macro="load: layout.pt">
   <form metal:fill-slot="new" action="${request.route_path('new')}" method="post" enctype="multipart/form-data">
     <input id='files' type="file" name="filename" value=""/>
     <br/>

@@ -1,4 +1,4 @@
-<tal:block metal:use-macro="layout">
+<tal:block metal:use-macro="load: layout.pt">
     <figure metal:fill-slot="detail">
     <div>
       <a class="btn inbl" href="${request.route_path('listing')}">Back</a>
