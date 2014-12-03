@@ -106,15 +106,3 @@ def site_layout():
     renderer = get_renderer("templates/layout.pt")
     layout = renderer.implementation().macros['layout']
     return layout
-
-def hide_element(request):
-    return (
-        "javascript:document.getElementById('%s').style.display = 'none'"
-        % element
-    )
-
-def show_element(request):
-    return (
-        "javascript:document.getElementById('%s').style.display = 'block'"
-        % element
-    )
