@@ -83,29 +83,29 @@ def dl_page(request):
     try:
         stored = ToStore.get(request.matchdict['id'])
     except couchdbkit.exceptions.ResourceNotFound :
+        return "Nope" # todo 404
 
-        return "Nope"
-    # import rpdb
-    # rpdb.set_trace()
     body = stored.fetch_attachment('attachment', stream=True)
     response = Response(content_type=stored._attachments['attachment']['content_type'],
                         body_file=body,
                         content_length=stored._attachments['attachment']['length'],
-                        content_md5=stored._attachments['attachment']['digest'])
+                        content_md5=stored._attachments['attachment']['digest'],
+                        content_disposition='ttachment; filename="%s"' % stored.filename)
 
     return response
 
 
 @view_config(route_name='detail', renderer='templates/detail.pt')
 def detail_page(request):
-    task_id = int(request.matchdict['id'])
-    rs = request.db.execute(
-        "select id, fdescr, fpath, fid, fname from tasks where id = %i"
-        % (task_id)
-        )
-    file_data = id, fdescr, fpath, fid, fname = rs.fetchone()
+    try:
+        stored = ToStore.get(request.matchdict['id'])
+    except couchdbkit.exceptions.ResourceNotFound :
+        return "Nope" # todo 404
+
+
+
     return {'layout': site_layout(),
-            'file_data': file_data}
+            'stored': stored}
 
 
 @view_config(context='pyramid.exceptions.NotFound', renderer='templates/notfound.pt')
