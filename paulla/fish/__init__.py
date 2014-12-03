@@ -25,7 +25,6 @@ def main(global_config, **settings):
 
     config.add_route('listing', '/')
     config.add_route('new', '/new')
-    config.add_route('close', '/close/{id}')
     config.add_route('download', '/dl/{id}')
     config.add_route('detail', '/detail/{id}')
     # static view setup

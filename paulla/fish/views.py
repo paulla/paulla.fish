@@ -1,5 +1,4 @@
 import os
-import logging
 import datetime
 
 
@@ -68,16 +67,6 @@ def new_view(request):
     return {}
 
 
-@view_config(route_name='close')
-def close_view(request):
-    task_id = int(request.matchdict['id'])
-    request.db.execute("update tasks set closed = ? where id = ?",
-                       (1, task_id))
-    request.db.commit()
-    request.session.flash('File was successfully marked for delete!')
-    return HTTPFound(location=request.route_path('listing'))
-
-
 @view_config(route_name='download')
 def dl_page(request):
     try:
@@ -112,40 +101,6 @@ def detail_page(request):
 def notfound_view(request):
     request.response.status = '404 Not Found'
     return {'layout': site_layout()}
-
-
-# s# ubscribers
-# @subscriber(NewRequest)
-# def new_request_subscriber(event):
-#     request = event.request
-#     settings = request.registry.settings
-#     request.db = sqlite3.connect(settings['db'])
-#     request.add_finished_callback(close_db_connection)
-
-
-# def close_db_connection(request):
-#     request.db.close()
-
-
-# @subscriber(ApplicationCreated)
-# def application_created_subscriber(event):
-#     log.warn('Initializing database...')
-#     with open(os.path.join(here, 'schema.sql')) as f:
-#         stmt = f.read()
-#         settings = event.app.registry.settings
-#         db = sqlite3.connect(settings['db'])
-#         db.executescript(stmt)
-#         db.commit()
-
-"""
-@subscriber(BeforeRender)
-def add_base_template(event):
-    base = get_renderer('templates/base.pt').implementation()
-    listing = get_renderer('templates/listing.pt').implementation()
-    event.update({'base': base,
-                    'listing':'listing',
-    })
-"""
 
 def site_layout():
     renderer = get_renderer("templates/layout.pt")
