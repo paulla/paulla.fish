@@ -16,7 +16,6 @@ from couchdbkit.designer import push
 from models import ToStore
 
 settings = get_current_registry().settings
-print settings
 
 # server object
 server = couchdbkit.Server(settings['couchdb.url'])
