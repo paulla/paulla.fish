@@ -6,6 +6,7 @@ import datetime
 from pyramid.httpexceptions import HTTPFound
 from pyramid.threadlocal import get_current_registry
 from pyramid.view import view_config
+from pyramid.response import Response
 
 from pyramid.renderers import get_renderer
 
@@ -33,8 +34,10 @@ for view in ['list']:
 
 @view_config(route_name='listing', renderer='templates/listing.pt')
 def list_view(request):
+    stored = ToStore.view('list/all',
+                          descending=True,)
     return {"layout": site_layout(),
-            'file_list': []}
+            'file_list': stored}
 
 
 @view_config(route_name='new', renderer='json', request_method='POST')
@@ -75,18 +78,21 @@ def close_view(request):
     return HTTPFound(location=request.route_path('listing'))
 
 
-@view_config(route_name='dl')
+@view_config(route_name='download')
 def dl_page(request):
-    task_id = int(request.matchdict['id'])
-    rs = request.db.execute(
-        "select fdescr, fpath, fid, fname from tasks where id = %i"
-        % (task_id)
-        )
-    file_data = fdescr, fpath, fid, fname = rs.fetchone()
-    response = FileResponse(
-        os.path.join(fpath, fid),
-        request=request,
-        )
+    try:
+        stored = ToStore.get(request.matchdict['id'])
+    except couchdbkit.exceptions.ResourceNotFound :
+
+        return "Nope"
+    # import rpdb
+    # rpdb.set_trace()
+    body = stored.fetch_attachment('attachment', stream=True)
+    response = Response(content_type=stored._attachments['attachment']['content_type'],
+                        body_file=body,
+                        content_length=stored._attachments['attachment']['length'],
+                        content_md5=stored._attachments['attachment']['digest'])
+
     return response
 
 

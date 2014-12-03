@@ -26,8 +26,8 @@ def main(global_config, **settings):
     config.add_route('listing', '/')
     config.add_route('new', '/new')
     config.add_route('close', '/close/{id}')
-    config.add_route('dl', '/dl/{id}/{fname}')
-    config.add_route('detail', '/detail/{id}/{fname}')
+    config.add_route('download', '/dl/{id}')
+    config.add_route('detail', '/detail/{id}')
     # static view setup
     config.add_static_view('static', os.path.join(here, 'static'))
     # scan for @view_config and @subscriber decorators
