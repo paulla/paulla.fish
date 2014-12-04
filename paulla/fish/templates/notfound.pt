@@ -1,4 +1,4 @@
-<tal:block metal:use-macro="layout">
+<tal:block metal:use-macro="load: layout.pt">
 <div metal:fill-slot="notfound" id="notfound" class="txtcenter">
   <h1>404 - PAGE NOT FOUND</h1>
   The page you're looking for isn't here.

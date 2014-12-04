@@ -10,11 +10,10 @@ CHANGES = open(os.path.join(here, 'CHANGES.txt')).read()
 requires = [
     'pyramid',
     'waitress',
-    'SQLAlchemy',
-    'paste',
     'pyramid_chameleon',
-    'pyramid_tm',
     'pyramid_debugtoolbar',
+    'couchdbkit',
+    'filemagic',
 ]
 
 setup(
@@ -38,9 +37,11 @@ setup(
     zip_safe=False,
     install_requires=requires,
     tests_require=requires,
-    test_suite="paullafish",
+    test_suite="paulla.fish",
     entry_points="""\
     [paste.app_factory]
     main = paulla.fish:main
+    [console_scripts]
+    migration = paulla.fish.utils:migration
     """,
 )

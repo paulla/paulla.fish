@@ -1,56 +1,54 @@
-<!doctype html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:tal="http://xml.zope.org/namespaces/tal"
+<html xmlns:tal="http://xml.zope.org/namespaces/tal"
       xmlns:metal="http://xml.zope.org/namespaces/metal"
       metal:define-macro="layout">
- <head>
-  <title>PauLLa.FiSh</title>
-  <link rel="stylesheet" href="${request.route_path('listing')}static/css/knacss.css" media="all">
-  <link rel="stylesheet" href="${request.route_path('listing')}static/css/pure-css-gui-icons.css" media="all">
-  <link rel="stylesheet" href="${request.route_path('listing')}static/css/tooltip.css" media="all">
-  <link rel="stylesheet" href="${request.route_path('listing')}static/css/button.css" media="all">
-  <link rel="stylesheet" href="${request.route_path('listing')}static/css/styles.css" media="all">
- </head>
- <body>
-  <!-- HEADER -->
-   <header>
-    <div id="header" role="banner" class="line pam txtcenter">
-    <a class="header" href="${request.route_path('listing')}">
-    <h1>PauLLa.FiSh : File Sharing</h1>
-   </a>
-  </div>
-  </header>
+  <head>
+    <title>PauLLa.FiSh</title>
+    <link rel="stylesheet" href="${request.route_path('listing')}static/css/knacss.css" media="all"></link>
+    <link rel="stylesheet" href="${request.route_path('listing')}static/css/pure-css-gui-icons.css" media="all"></link>
+    <link rel="stylesheet" href="${request.route_path('listing')}static/css/tooltip.css" media="all"></link>
+    <link rel="stylesheet" href="${request.route_path('listing')}static/css/button.css" media="all"></link>
+    <link rel="stylesheet" href="${request.route_path('listing')}static/css/styles.css" media="all"></link>
+  </head>
+  <body>
     <!-- HEADER -->
-  <div class="alignCenter" id="flash" tal:condition="request.session.peek_flash()">
-   <span tal:omit-tag="" tal:repeat="message request.session.pop_flash()">${message}</span>
-  </div>
-  <!-- MAIN -->
-<div id="main" role="main" class="row">
-<div class="col w40 pam aside">
-<nav id="navigation" role="navigation">
-<tal:block metal:define-slot="new">
-</tal:block>
-</nav>
-</div>
+    <header>
+      <div id="header" role="banner" class="line pam txtcenter">
+	<a class="header" href="${request.route_path('listing')}">
+	  <h1>PauLLa.FiSh : File Sharing</h1>
+	</a>
+      </div>
+    </header>
+    <!-- HEADER -->
+    <div class="alignCenter" id="flash" tal:condition="request.session.peek_flash()">
+      <span tal:omit-tag="" tal:repeat="message request.session.pop_flash()">${message}</span>
+    </div>
+    <!-- MAIN -->
+    <div id="main" role="main" class="row">
+      <div class="col w40 pam aside">
+	<nav id="navigation" role="navigation">
+	  <tal:block metal:define-slot="new">
+	  </tal:block>
+	</nav>
+      </div>
 
-<div class="col pam content">
-<tal:block metal:define-slot="listing">
-</tal:block>
-</div>
-</div>
-<tal:block tal:omit-tag="" metal:define-slot="detail">
-</tal:block>
-<tal:block tal:omit-tag="" metal:define-slot="notfound">
-</tal:block>
-<!-- MAIN -->
-  <!-- FOOTER -->
-  <footer>
-  <div id="footer" role="contentinfo " class="line pam txtcenter">
-   <a class='footer' href="http://www.paulla.asso.fr/">Site de l'association "PauLLa"</a><br/>
-   <a class='footer' href="https://github.com/paulla/paulla.fish">Code sur Github.com</a>
-   </div>
-   </footer>
-     <!-- FOOTER -->
+      <div class="col pam content">
+	<tal:block metal:define-slot="listing">
+	</tal:block>
+      </div>
+    </div>
+    <tal:block tal:omit-tag="" metal:define-slot="detail">
+    </tal:block>
+    <tal:block tal:omit-tag="" metal:define-slot="notfound">
+    </tal:block>
+    <!-- MAIN -->
+    <!-- FOOTER -->
+    <footer>
+      <div id="footer" role="contentinfo " class="line pam txtcenter">
+	<a class='footer' href="http://www.paulla.asso.fr/">Site de l'association "PauLLa"</a><br/>
+	<a class='footer' href="https://github.com/paulla/paulla.fish">Code sur Github.com</a>
+      </div>
+    </footer>
+    <!-- FOOTER -->
 
- </body>
+  </body>
 </html>

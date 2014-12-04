@@ -1,21 +1,21 @@
-<tal:block metal:use-macro="layout">
-<form metal:fill-slot="new" action="${request.route_path('new')}" method="post" enctype="multipart/form-data">
-  <input id='files' type="file" name="fname" value=""/>
-  <br/>
-  <br/>
-  <input class="inDescr" type="text" placeholder="Enter your description here" maxLength="100" name="fdescr">
-  <br/>
-  <br/>
-<input type="submit" name="add" value="Submit" class="btn">
-</form>
-<ul metal:fill-slot="listing">
+<tal:block metal:use-macro="load: layout.pt">
+  <form metal:fill-slot="new" action="${request.route_path('new')}" method="post" enctype="multipart/form-data">
+    <input id='files' type="file" name="filename" value=""/>
+    <br/>
+    <br/>
+    <input class="inDescr" type="text" placeholder="Enter your description here" name="description" />
+    <br/>
+    <br/>
+    <input type="submit" name="add" value="Submit" class="btn" />
+  </form>
+  <ul metal:fill-slot="listing">
     <li class="fileList" tal:repeat="file file_list">
-        <div id="hoverSoft">
-         <span class="search"><a href="detail/${file['id']}/${file['fname']}"><span class="tooltip">View detail</span></a></span>
-         <span class="download"><a alt="Download" href="dl/${file['id']}/${file['fname']}"><span class="tooltip">Download</span></a></span>
-         <span class="delete-alt"><a href="close/${file['id']}"><span class="tooltip">Close</span></a></span>
-         <em class="tooltip-container">${file['fname']}<span class="tooltip"><img src="dl/${file['id']}/${file['fname']}"/>${file['fdescr']}</span></em>
-        </div>
+      <div id="hoverSoft">
+        <span class="search"><a href="${request.route_path('detail', id=file['_id'])}"><span class="tooltip">View detail</span></a></span>
+        <span class="download"><a alt="Download" href="${request.route_path('download', id=file['_id'])}"><span class="tooltip">Download</span></a></span>
+        <em class="tooltip-container">${file['filename']}<span class="tooltip">
+	<img src="${request.route_path('download', id=file['_id'])}"/>${file['description']}</span></em>
+      </div>
     </li>
-</ul>
+  </ul>
 </tal:block>
