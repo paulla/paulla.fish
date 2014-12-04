@@ -37,7 +37,7 @@ def migration():
 
     for row in cursor.fetchall():
         id_, fdescr, fpath, fid, fname = row
-        todo = ToStore(_id=id_,
+        todo = ToStore(_id=str(id_),
                       description=fdescr,
                       filename=fname,
                       dtInserted=datetime.datetime.now()
