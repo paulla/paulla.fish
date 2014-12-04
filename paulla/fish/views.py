@@ -76,7 +76,7 @@ def dl_page(request):
                         body_file=body,
                         content_length=stored._attachments['attachment']['length'],
                         content_md5=stored._attachments['attachment']['digest'],
-                        content_disposition='ttachment; filename="%s"' % stored.filename)
+                        content_disposition='attachment; filename="%s"' % stored.filename.encode('ascii', 'ignore'))
 
     return response
 
