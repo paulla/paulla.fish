@@ -68,10 +68,10 @@ def new_view(request):
 def dl_page(request):
     try:
         stored = ToStore.get(request.matchdict['id'])
+        body = stored.fetch_attachment('attachment', stream=True)
     except couchdbkit.exceptions.ResourceNotFound :
         return HTTPNotFound()
 
-    body = stored.fetch_attachment('attachment', stream=True)
     response = Response(content_type=stored._attachments['attachment']['content_type'],
                         body_file=body,
                         content_length=stored._attachments['attachment']['length'],
