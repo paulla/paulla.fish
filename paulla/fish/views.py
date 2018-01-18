@@ -72,11 +72,11 @@ def dl_page(request):
     except couchdbkit.exceptions.ResourceNotFound :
         return HTTPNotFound()
 
-    response = Response(content_type=stored._attachments['attachment']['content_type'],
+    response = Response(content_type=str(stored._attachments['attachment']['content_type']),
                         body_file=body,
-                        content_length=stored._attachments['attachment']['length'],
-                        content_md5=stored._attachments['attachment']['digest'],
-                        content_disposition='attachment; filename="%s"' % stored.filename.encode('ascii', 'ignore'))
+                        content_length=str(stored._attachments['attachment']['length']),
+                        content_md5=str(stored._attachments['attachment']['digest']),
+                        content_disposition=str('attachment; filename="%s"') % stored.filename.encode('ascii', 'ignore'))
 
     return response
 
